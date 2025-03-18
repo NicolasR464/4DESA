@@ -4,10 +4,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+import { useRouter } from 'next/navigation'
+
 import { useState } from 'react'
 
 const Onboarding = () => {
     const [pseudo, setPseudo] = useState('')
+    const router = useRouter()
 
     const send = () => {
         console.log(pseudo)
@@ -19,6 +22,8 @@ const Onboarding = () => {
             },
             body: JSON.stringify({ pseudo }),
         })
+
+        router.push('/')
     }
 
     return (

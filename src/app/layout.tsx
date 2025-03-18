@@ -9,6 +9,7 @@ import {
 } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { Button } from '@/components/ui/button'
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -31,15 +32,19 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <ClerkProvider>
+        <ClerkProvider signUpForceRedirectUrl="/onboarding" afterSignOutUrl="/">
             <html lang="en">
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
                     <header className="flex justify-end items-center p-4 gap-4 h-16">
                         <SignedOut>
-                            <SignInButton />
-                            <SignUpButton />
+                            <Button>
+                                <SignInButton />
+                            </Button>
+                            <Button>
+                                <SignUpButton />
+                            </Button>
                         </SignedOut>
                         <SignedIn>
                             <UserButton />
