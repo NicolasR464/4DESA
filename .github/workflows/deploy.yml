@@ -10,11 +10,6 @@ on:
         branches:
             - main
 
-env:
-    MONGODB_URI: ${{ secrets.MONGODB_URI }}
-    CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
@@ -32,11 +27,10 @@ jobs:
               run: npm install
 
             - name: Create .env.local
-              run: echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.local
+              run: |
+                  echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env.local
+                  echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> .env.local
+                  echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env.local
 
-            - name: Build
+            - name: Build the project
               run: npm run build
-              env:
-                  MONGODB_URI: ${{ secrets.MONGODB_URI }}
-                  CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-                  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
