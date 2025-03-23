@@ -29,6 +29,9 @@ jobs:
             - name: Install dependencies
               run: npm install
 
+            - name: Create .env.local
+              run: echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.local
+
             - name: Build
               run: npm run build
               env:
