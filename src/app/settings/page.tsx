@@ -4,40 +4,39 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { getRandomAvatarUrl } from '@/utils/functions'
 
+import { toast } from 'sonner'
+
 import { RefreshCw } from 'lucide-react'
 import Image from 'next/image'
 
-import { useRouter } from 'next/navigation'
+import { useUserStore } from '@/app/store/user'
 
-import { useEffect, useState } from 'react'
+const Settings = () => {
+    const { pseudo, avatar, setPseudo, setAvatar } = useUserStore()
 
-const Onboarding = () => {
-    const [pseudo, setPseudo] = useState('')
-    const [avatar, setAvatar] = useState('')
-    const router = useRouter()
-
-    useEffect(() => {
-        setAvatar(getRandomAvatarUrl())
-    }, [])
-
-    const send = () => {
-        console.log(pseudo)
-
-        fetch('/api/onboarding', {
-            method: 'POST',
+    const send = async () => {
+        const res = await fetch('/api/user', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ pseudo, avatar }),
         })
 
-        router.push('/')
+        console.log(res.status)
+
+        if (res.status !== 200) {
+            toast('❌ Error')
+            return
+        }
+
+        toast('✅ Updated')
     }
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center m-4">
             <div className="flex flex-col w-3xl justify-center items-center border-2 p-4 rounded-2xl">
-                <h2 className="text-2xl mb-14">Set up your profile info</h2>
+                <h2 className="text-2xl mb-14">Update your profile info</h2>
                 <div className="flex mb-4 items-center">
                     {avatar && (
                         <Image
@@ -56,7 +55,7 @@ const Onboarding = () => {
                             setAvatar(getRandomAvatarUrl())
                         }}
                     >
-                        <RefreshCw /> Choose your avatar
+                        <RefreshCw /> Change your avatar
                     </Button>
                 </div>
 
@@ -64,17 +63,18 @@ const Onboarding = () => {
                     required
                     onChange={(e) => setPseudo(e.target.value)}
                     id="pseudo"
-                    placeholder="Write your speudo"
+                    placeholder="Update your speudo"
                     className="m-2 max-w-100"
                     name="pseudo"
+                    value={pseudo}
                 />
 
                 <Button onClick={send} className="m-2 cursor-pointer">
-                    SAVE
+                    UPDATE
                 </Button>
             </div>
         </div>
     )
 }
 
-export default Onboarding
+export default Settings

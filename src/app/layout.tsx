@@ -9,6 +9,10 @@ import {
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { DropDownMenu } from '@/components/DropDownMenu'
+import { Toaster } from '@/components/ui/sonner'
+
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -36,14 +40,28 @@ export default function RootLayout({
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
-                    <header className="flex justify-end items-center p-4 gap-4 h-16">
+                    <Toaster />
+                    <header className="flex justify-between items-center p-4 gap-4 h-16 border-b-2 border-b-black">
+                        <div>
+                            <Link className="text-sky-950 text-xl" href={'/'}>
+                                4DESA SOCIAL
+                            </Link>
+                        </div>
                         <SignedOut>
                             <SignInButton />
 
                             <SignUpButton />
                         </SignedOut>
                         <SignedIn>
-                            <DropDownMenu />
+                            <div className="flex items-center">
+                                <Link
+                                    className="mr-2 flex p-1 border-2 border-gray-700 rounded-sm items-center gap-2"
+                                    href={'/upload'}
+                                >
+                                    <Plus /> Post something
+                                </Link>
+                                <DropDownMenu />
+                            </div>
                         </SignedIn>
                     </header>
                     {children}

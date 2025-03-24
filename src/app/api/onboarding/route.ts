@@ -34,14 +34,14 @@ export const POST = async (req: Request) => {
     }
 
     // Find if user already exists
-    const userExists = await db.collection('user').findOne({ id })
+    const userExists = await db.collection('users').findOne({ id })
     if (userExists) {
         return new Response(JSON.stringify({ error: 'User already exists' }), {
             status: 400,
         })
     }
 
-    const res = await db.collection('user').insertOne({ pseudo, id, avatar })
+    const res = await db.collection('users').insertOne({ pseudo, id, avatar })
 
     if (res.acknowledged)
         return new Response(
