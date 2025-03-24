@@ -39,8 +39,8 @@ jobs:
               run: |
                   mkdir deploy-folder
                   cp -r .next/standalone/* deploy-folder/
-                  cp -r .next/static deploy-folder/.next/static
-                  cp -r public deploy-folder/public || true
+                  [ -d ".next/static" ] && cp -r .next/static deploy-folder/.next/static || true
+                  [ -d "public" ] && cp -r public deploy-folder/public || true
                   cp package.json package-lock.json deploy-folder/
                   cd deploy-folder && zip -r ../release.zip .
 
