@@ -35,10 +35,13 @@ jobs:
                   npm run build --if-present
                   npm run test --if-present
 
-            - name: Zip build artifacts for deployment
+            - name: Zip standalone build for deployment
               run: |
                   mkdir deploy-folder
-                  cp -r .next public package.json package-lock.json node_modules deploy-folder/
+                  cp -r .next/standalone/* deploy-folder/
+                  cp -r .next/static deploy-folder/.next/static
+                  cp -r public deploy-folder/public || true
+                  cp package.json package-lock.json deploy-folder/
                   cd deploy-folder && zip -r ../release.zip .
 
             - name: Upload artifact for deployment job
