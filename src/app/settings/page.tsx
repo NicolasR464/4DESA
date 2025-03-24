@@ -9,10 +9,10 @@ import { toast } from 'sonner'
 import { RefreshCw } from 'lucide-react'
 import Image from 'next/image'
 
-import { useUserStore } from '@/app/store/user'
+import { UserStore, useUserStore } from '@/app/store/user'
 
 const Settings = () => {
-    const { pseudo, avatar, setPseudo, setAvatar } = useUserStore()
+    const { pseudo, avatar, setPseudo, setAvatar } = useUserStore() as UserStore
 
     const send = async () => {
         const res = await fetch('/api/user', {
