@@ -9,7 +9,6 @@ import {
 } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import { Button } from '@/components/ui/button'
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -39,12 +38,9 @@ export default function RootLayout({
                 >
                     <header className="flex justify-end items-center p-4 gap-4 h-16">
                         <SignedOut>
-                            <Button>
-                                <SignInButton />
-                            </Button>
-                            <Button>
-                                <SignUpButton />
-                            </Button>
+                            <SignInButton />
+
+                            <SignUpButton />
                         </SignedOut>
                         <SignedIn>
                             <UserButton />
