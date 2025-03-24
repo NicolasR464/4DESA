@@ -46,9 +46,10 @@ const UploadPage = () => {
         console.log(upload)
 
         if (upload.ok) {
-            console.log('✅ Upload successful!')
+            console.log('✅ File Upload successful!')
+
             // API call to save the post
-            fetch('/api/post', {
+            const postRes = await fetch('/api/post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,6 +59,8 @@ const UploadPage = () => {
                     fileUrl: upload.url.split('?')[0],
                 }),
             })
+
+            if (postRes.ok) toast('✅ Posted!')
         } else {
             console.error('❌ Upload failed')
             toast('❌ Upload failed')
