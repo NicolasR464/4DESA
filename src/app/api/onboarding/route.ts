@@ -25,7 +25,7 @@ export const POST = async (req: Request) => {
     const { id } = user
 
     const body = await req.json()
-    const { pseudo } = body
+    const { pseudo, avatar } = body
 
     if (!pseudo) {
         return new Response(JSON.stringify({ error: 'Missing pseudo' }), {
@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
         })
     }
 
-    const res = await db.collection('user').insertOne({ pseudo, id })
+    const res = await db.collection('user').insertOne({ pseudo, id, avatar })
 
     if (res.acknowledged)
         return new Response(
