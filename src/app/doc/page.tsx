@@ -10,7 +10,6 @@ export default function ApiDocs() {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        // Make sure this path matches your API route exactly
         fetch('/api/doc')
             .then((response) => {
                 if (!response.ok) {
@@ -21,12 +20,10 @@ export default function ApiDocs() {
                 return response.json()
             })
             .then((data) => {
-                console.log('Swagger spec loaded:', data)
                 setSpec(data)
                 setLoading(false)
             })
             .catch((err) => {
-                console.error('Error loading Swagger spec:', err)
                 setError(err.message)
                 setLoading(false)
             })

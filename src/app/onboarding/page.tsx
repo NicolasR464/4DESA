@@ -21,8 +21,6 @@ const Onboarding = () => {
     }, [])
 
     const send = () => {
-        console.log(pseudo)
-
         fetch('/api/onboarding', {
             method: 'POST',
             headers: {

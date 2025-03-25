@@ -146,8 +146,6 @@ export const GET = async () => {
         })
     }
 
-    console.log({ userData })
-
     return new Response(JSON.stringify(userData), {
         status: 200,
     })
@@ -175,11 +173,7 @@ export const PUT = async (req: Request) => {
 
     const { pseudo, avatar } = await req.json()
 
-    console.log('🔥 PSEUDO   -- ', pseudo)
-
     const userData = await db.collection('users').findOne({ id })
-
-    console.log({ userData })
 
     if (!userData) {
         return new Response(JSON.stringify({ error: 'No user found.' }), {
@@ -196,8 +190,6 @@ export const PUT = async (req: Request) => {
             },
         }
     )
-
-    console.log({ updatedUserData })
 
     if (!updatedUserData.acknowledged) {
         return new Response(JSON.stringify({ error: 'Couldn‘t update.' }), {

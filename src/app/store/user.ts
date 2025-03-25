@@ -20,8 +20,6 @@ export const useUserStore = create(
             const res = await fetch('/api/user')
             const userData = await res.json()
 
-            console.log({ data: userData })
-
             if (userData.pseudo) set({ pseudo: userData.pseudo })
             if (userData.avatar) set({ avatar: userData.avatar })
         },

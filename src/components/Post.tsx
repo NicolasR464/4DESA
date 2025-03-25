@@ -5,8 +5,6 @@ import { formatDistanceToNow } from 'date-fns'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const Post = ({ post }: { post: PostType }) => {
-    console.log(post)
-
     return (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden my-4 max-w-2xl mx-auto border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
             <div className="p-6">

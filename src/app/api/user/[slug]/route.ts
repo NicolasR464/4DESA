@@ -65,9 +65,6 @@ export const GET = async (
 ) => {
     const params = await segmentData.params
     const pseudo = params.slug
-    console.log('GET USER ROUTE')
-
-    console.log({ pseudo })
 
     const db = await mongoConnect()
 
@@ -93,8 +90,6 @@ export const GET = async (
             status: 500,
         })
     }
-
-    console.log({ userData })
 
     return new Response(JSON.stringify(userData), {
         status: 200,

@@ -61,12 +61,9 @@ import {
 } from '@azure/storage-blob'
 
 export const GET = async (req: Request) => {
-    console.log('🔥 GET')
-
     const url = new URL(req.url)
     const containerName = url.searchParams.get('containerName')
     const fileName = url.searchParams.get('fileName')
-    console.log({ containerName })
 
     if (!containerName)
         return new Response(

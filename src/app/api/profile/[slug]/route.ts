@@ -82,9 +82,6 @@ export const GET = async (
     const params = await segmentData.params
     const pseudo = params.slug
 
-    console.log('GET PROFILE ROUTE')
-    console.log({ pseudo })
-
     const db = await mongoConnect()
 
     if (!db) {
@@ -101,8 +98,6 @@ export const GET = async (
             status: 404,
         })
     }
-
-    console.log({ pseudo })
 
     const posts = await db
         .collection('posts')

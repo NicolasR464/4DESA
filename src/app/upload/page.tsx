@@ -22,18 +22,9 @@ const UploadPage = () => {
     if (!isSignedIn) router.push('/')
 
     const handleUpload = async (file: File) => {
-        console.log('🚀 ~ file: page.tsx:83 ~ handleUpload ~ file:')
-
-        console.log(file.name)
-
         const fileType = file.type
         const isImage = fileType.startsWith('image/')
         const isVideo = fileType.startsWith('video/')
-
-        console.log(fileType)
-
-        console.log(isImage)
-        console.log(isVideo)
 
         if (!isImage && !isVideo) {
             toast('❌ Invalid file type. Only images and videos are allowed.')
@@ -47,7 +38,6 @@ const UploadPage = () => {
         )
 
         if (!res.ok) {
-            console.error('❌ Failed to get upload URL')
             toast('❌ Failed to upload the file.')
             return
         }
@@ -60,8 +50,6 @@ const UploadPage = () => {
             },
             body: file,
         })
-
-        console.log(upload)
 
         setFile({
             url: upload.url.split('?')[0],

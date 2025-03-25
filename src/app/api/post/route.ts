@@ -97,8 +97,6 @@ import { currentUser } from '@clerk/nextjs/server'
 import { mongoConnect } from '@/utils/mongo'
 
 export const POST = async (req: Request) => {
-    console.log('🔥 POST')
-
     const user = await currentUser()
 
     const db = await mongoConnect()
@@ -115,8 +113,6 @@ export const POST = async (req: Request) => {
             }
         )
     }
-
-    console.log(author)
 
     if (!user || author.id !== user.id) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {

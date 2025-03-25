@@ -23,8 +23,6 @@ const Settings = () => {
             body: JSON.stringify({ pseudo, avatar }),
         })
 
-        console.log(res.status)
-
         if (res.status !== 200) {
             toast('❌ Error')
             return

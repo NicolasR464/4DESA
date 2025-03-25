@@ -6,9 +6,6 @@ export const getRandomAvatarUrl = (): string => {
 }
 
 export const getUserByPseudo = async (userPseudo: string) => {
-    console.log('🔥🔥🔥🔥🔥🔥')
-
-    console.log({ userPseudo })
     const res = await fetch(
         `${
             process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -21,21 +18,16 @@ export const getUserByPseudo = async (userPseudo: string) => {
 
     const userData = await res.json()
 
-    console.log({ userData })
-
     return userData
 }
 
 export const getUserPosts = async (id: string) => {
     {
-        console.log({ id })
-
         const res = await fetch(
             `${
                 process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
             }/api/profile/${id}`
         )
-        console.log(res)
 
         if (!res.ok) {
             return []

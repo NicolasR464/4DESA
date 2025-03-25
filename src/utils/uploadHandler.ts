@@ -6,8 +6,6 @@ import {
 } from '@azure/storage-blob'
 
 export const uploadHandler = async (containerName: string) => {
-    console.log({ containerName })
-
     if (!containerName) {
         return undefined
     }
