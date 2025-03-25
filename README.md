@@ -66,6 +66,7 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+Got to [http://localhost:3000/doc](http://localhost:3000/doc) to read the Swagger API documentation.
 
 ## Azure Services Configuration
 
