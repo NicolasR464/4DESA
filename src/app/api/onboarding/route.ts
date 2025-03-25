@@ -1,3 +1,71 @@
+/**
+ * @swagger
+ * /api/onboarding:
+ *   post:
+ *     summary: User onboarding process
+ *     description: Creates a new user profile with pseudo and avatar after authentication
+ *     tags:
+ *       - Users
+ *     security:
+ *       - clerkAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - pseudo
+ *             properties:
+ *               pseudo:
+ *                 type: string
+ *                 description: User's display name
+ *               avatar:
+ *                 type: string
+ *                 description: URL to user's avatar image
+ *     responses:
+ *       200:
+ *         description: Onboarding successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Onboarding successful
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Missing pseudo
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unauthorized
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Onboarding failed
+ */
+
 import { currentUser } from '@clerk/nextjs/server'
 
 import { mongoConnect } from '@/utils/mongo'

@@ -1,3 +1,119 @@
+/**
+ * @swagger
+ * /api/user:
+ *   get:
+ *     summary: Get current user information
+ *     description: Retrieves information about the currently authenticated user
+ *     tags:
+ *       - Users
+ *     security:
+ *       - clerkAuth: []
+ *     responses:
+ *       200:
+ *         description: User information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: MongoDB document ID
+ *                 id:
+ *                   type: string
+ *                   description: User ID from Clerk
+ *                 pseudo:
+ *                   type: string
+ *                   description: User's display name
+ *                 avatar:
+ *                   type: string
+ *                   description: URL to user's avatar image
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unauthorized
+ *       500:
+ *         description: Server error or user not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: No user found.
+ *   put:
+ *     summary: Update user information
+ *     description: Updates the profile information of the currently authenticated user
+ *     tags:
+ *       - Users
+ *     security:
+ *       - clerkAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               pseudo:
+ *                 type: string
+ *                 description: User's new display name
+ *               avatar:
+ *                 type: string
+ *                 description: URL to user's new avatar image
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 acknowledged:
+ *                   type: boolean
+ *                   example: true
+ *                 modifiedCount:
+ *                   type: number
+ *                   example: 1
+ *                 upsertedId:
+ *                   type: string
+ *                   nullable: true
+ *                   example: null
+ *                 upsertedCount:
+ *                   type: number
+ *                   example: 0
+ *                 matchedCount:
+ *                   type: number
+ *                   example: 1
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unauthorized
+ *       500:
+ *         description: Server error or update failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Couldn't update.
+ */
+
 import { mongoConnect } from '@/utils/mongo'
 import { currentUser } from '@clerk/nextjs/server'
 
