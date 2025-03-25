@@ -5,11 +5,25 @@ import { Input } from '@/components/ui/input'
 import { blobContainerNames } from '@/utils/variables'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
+import type { MediaType } from '@/types/post'
+import { UserStore, useUserStore } from '../store/user'
+import { useAuth } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 const UploadPage = () => {
+    const router = useRouter()
+
     const [text, setText] = useState('')
+    const [file, setFile] = useState<MediaType>()
+    const { pseudo, avatar } = useUserStore() as UserStore
+
+    const { userId, isSignedIn } = useAuth()
+
+    if (!isSignedIn) router.push('/')
 
     const handleUpload = async (file: File) => {
+        console.log('🚀 ~ file: page.tsx:83 ~ handleUpload ~ file:')
+
         console.log(file.name)
 
         const fileType = file.type
@@ -17,6 +31,9 @@ const UploadPage = () => {
         const isVideo = fileType.startsWith('video/')
 
         console.log(fileType)
+
+        console.log(isImage)
+        console.log(isVideo)
 
         if (!isImage && !isVideo) {
             toast('❌ Invalid file type. Only images and videos are allowed.')
@@ -31,6 +48,7 @@ const UploadPage = () => {
 
         if (!res.ok) {
             console.error('❌ Failed to get upload URL')
+            toast('❌ Failed to upload the file.')
             return
         }
         const { url } = await res.json()
@@ -45,26 +63,32 @@ const UploadPage = () => {
 
         console.log(upload)
 
-        if (upload.ok) {
-            console.log('✅ File Upload successful!')
+        setFile({
+            url: upload.url.split('?')[0],
+            type: isImage ? 'image' : 'video',
+        })
+    }
 
-            // API call to save the post
-            const postRes = await fetch('/api/post', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+    const handleSubmit = async () => {
+        // API call to save the post
+        const postRes = await fetch('/api/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                text,
+                author: {
+                    id: userId,
+                    pseudo,
+                    avatar,
                 },
-                body: JSON.stringify({
-                    text,
-                    fileUrl: upload.url.split('?')[0],
-                }),
-            })
+                ...(file && { media: file }),
+            }),
+        })
 
-            if (postRes.ok) toast('✅ Posted!')
-        } else {
-            console.error('❌ Upload failed')
-            toast('❌ Upload failed')
-        }
+        if (postRes.ok) toast('✅ Posted!')
+        if (!postRes.ok) toast('❌ An error occured!')
     }
 
     return (
@@ -87,7 +111,9 @@ const UploadPage = () => {
                 }
             />
 
-            <Button className="m-2 max-w-sm">Submit</Button>
+            <Button className="m-2 max-w-sm" onClick={() => handleSubmit()}>
+                Submit
+            </Button>
         </div>
     )
 }

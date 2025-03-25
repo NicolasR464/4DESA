@@ -48,9 +48,17 @@ export default function RootLayout({
                             </Link>
                         </div>
                         <SignedOut>
-                            <SignInButton />
-
-                            <SignUpButton />
+                            <div
+                                className="flex
+                            "
+                            >
+                                <div className="p-2 m-2 border-2 border-black bg-white-600 hover:bg-black text-black hover:text-white rounded-lg transition-colors duration-200 shadow-sm">
+                                    <SignInButton />
+                                </div>
+                                <div className="p-2 m-2 border-2 border-black bg-white-600 hover:bg-black text-black hover:text-white rounded-lg transition-colors duration-200 shadow-sm">
+                                    <SignUpButton />
+                                </div>
+                            </div>
                         </SignedOut>
                         <SignedIn>
                             <div className="flex items-center">

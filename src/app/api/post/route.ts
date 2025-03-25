@@ -9,6 +9,10 @@ export const POST = async (req: Request) => {
 
     const db = await mongoConnect()
 
+    const body = await req.json()
+
+    const { text, media, author } = body
+
     if (!db) {
         return new Response(
             JSON.stringify({ error: '❌ MongoDB not connected' }),
@@ -18,33 +22,28 @@ export const POST = async (req: Request) => {
         )
     }
 
-    if (!user) {
+    console.log(author)
+
+    if (!user || author.id !== user.id) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {
             status: 401,
         })
     }
-    const { id: userId } = user
-
-    const body = await req.json()
-
-    const { text, fileUrl } = body
 
     if (!text) {
-        return new Response(JSON.stringify({ error: 'Missing title' }), {
-            status: 400,
-        })
-    }
-    if (!fileUrl) {
-        return new Response(JSON.stringify({ error: 'Missing fileUrl' }), {
+        return new Response(JSON.stringify({ error: 'Missing text' }), {
             status: 400,
         })
     }
 
-    console.log({ text, fileUrl })
+    const { pseudo, avatar } = author
 
-    const resPost = await db
-        .collection('posts')
-        .insertOne({ text, userId, fileUrl, createdAt: new Date() })
+    const resPost = await db.collection('posts').insertOne({
+        text,
+        author: { pseudo, avatar },
+        media,
+        createdAt: new Date(),
+    })
 
     if (!resPost.acknowledged) {
         return new Response(JSON.stringify({ error: 'Couldn‘t update.' }), {

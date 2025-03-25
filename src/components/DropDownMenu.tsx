@@ -19,7 +19,7 @@ import Link from 'next/link'
 import { UserStore, useUserStore } from '@/app/store/user'
 
 export function DropDownMenu() {
-    const { getUserData, avatar } = useUserStore() as UserStore
+    const { getUserData, avatar, pseudo } = useUserStore() as UserStore
 
     if (!avatar) getUserData()
 
@@ -33,14 +33,22 @@ export function DropDownMenu() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <User />
-                        <Link href="/profile">Profile</Link>
-                    </DropdownMenuItem>
+                    <Link
+                        className="cursor-pointer"
+                        href={`/profile/${pseudo}`}
+                    >
+                        <DropdownMenuItem>
+                            <User />
+                            Profile
+                        </DropdownMenuItem>
+                    </Link>
 
-                    <DropdownMenuItem>
-                        <Settings /> <Link href="/settings">Settings</Link>
-                    </DropdownMenuItem>
+                    <Link href="/settings">
+                        <DropdownMenuItem>
+                            <Settings />
+                            Settings
+                        </DropdownMenuItem>
+                    </Link>
 
                     <DropdownMenuItem className="cursor-pointer">
                         <LogOut />
