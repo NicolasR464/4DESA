@@ -1,37 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 4DESA Social App
+
+A social media application built with Next.js, featuring user authentication, post creation with media uploads, and profile management.
+
+## Technologies Used
+
+-   **Frontend**: Next.js, React, Tailwind CSS
+-   **Authentication**: Clerk
+-   **Database**: MongoDB on Azure Cosmos DB
+-   **Storage**: Azure Blob Storage
+-   **Deployment**: Vercel
+-   **Security**: Azure Key Vault for secrets management
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+-   Node.js (v18 or later)
+-   npm or yarn
+-   Azure account for cloud services
+-   Vercel account for deployment
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/4desa_proj.git
+cd 4desa_proj
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+# Azure Storage
+AZURE_STORAGE_ACCOUNT_NAME=your_storage_account_name
+AZURE_STORAGE_ACCOUNT_KEY=your_storage_account_key
+
+# MongoDB Connection
+MONGODB_URI=your_mongodb_connection_string
+
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Running the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Azure Services Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Azure Blob Storage
 
-## Learn More
+This project uses Azure Blob Storage for storing user-uploaded media (images and videos). The application creates containers for different types of media and generates SAS tokens for secure uploads.
 
-To learn more about Next.js, take a look at the following resources:
+### Azure Cosmos DB with MongoDB API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+User data and posts are stored in MongoDB collections hosted on Azure Cosmos DB. This provides a scalable and globally distributed database solution.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Azure Key Vault
 
-## Deploy on Vercel
+Sensitive configuration values and secrets are stored in Azure Key Vault for enhanced security.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# 4DESA
+The application is deployed on Vercel. To deploy your own instance:
+
+1. Push your code to a GitHub repository
+2. Connect your Vercel account to your repository
+3. Configure the environment variables in the Vercel dashboard
+4. Deploy the application
+
+## Features
+
+-   User authentication and profile management
+-   Post creation with text and media (images/videos)
+-   Feed of recent posts
+-   User profiles with post history
+-   Responsive design for mobile and desktop
+
+## Project Structure
+
+-   `/src/app`: Next.js application routes and API endpoints
+-   `/src/components`: Reusable React components
+-   `/src/utils`: Utility functions and helpers
+-   `/src/types`: TypeScript type definitions
