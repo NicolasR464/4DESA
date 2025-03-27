@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
     return (
         <ClerkProvider signUpForceRedirectUrl="/onboarding" afterSignOutUrl="/">
-            <html lang="en">
+            <html lang="en" suppressHydrationWarning>
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
